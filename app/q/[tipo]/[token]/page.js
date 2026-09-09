@@ -1,0 +1,6 @@
+export const dynamic='force-dynamic';
+import { query } from '@/lib/db';
+import { notFound } from 'next/navigation';
+
+const map={inventario:{table:'inventario',label:'Item de inventário'},material:{table:'materiais',label:'Material'},ferramenta:{table:'ferramentas',label:'Ferramenta'}};
+export default async function QRPage({params}){const {tipo,token}=await params;const cfg=map[tipo];if(!cfg)notFound();const r=await query(`SELECT * FROM ${cfg.table} WHERE qr_token=$1 AND ativo=true LIMIT 1`,[token]);const item=r.rows[0];if(!item)notFound();const title=item.descricao||item.nome||cfg.label;const omit=new Set(['id','condominio_id','qr_token','criado_por','atualizado_por','foto_url','logo_data_url']);return <main className="auth-shell"><section className="auth-card" style={{width:'min(620px,100%)'}}><div className="auth-logo"><div className="mark">GC</div><div><strong>Gestão Operacional de Condomínios</strong><div className="muted">Consulta pública por QR Code</div></div></div><h1>{title}</h1><p>{cfg.label}</p><div>{Object.entries(item).filter(([k])=>!omit.has(k)).map(([k,v])=><div className="statline" key={k}><span className="muted">{k.replaceAll('_',' ')}</span><strong>{v==null?'—':typeof v==='boolean'?(v?'Sim':'Não'):String(v)}</strong></div>)}</div></section></main>}
