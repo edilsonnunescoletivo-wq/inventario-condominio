@@ -3,7 +3,7 @@ name: Import v6 source
 on:
   push:
     branches:
-      - upload-v6-planos
+      - main
     paths:
       - '.upload/trigger.txt'
 
@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: upload-v6-planos
+          ref: main
           fetch-depth: 0
 
       - name: Rebuild source archive
@@ -35,4 +35,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "feat: importar arquivos principais da versão v6 com planos comerciais"
-          git push origin HEAD:upload-v6-planos
+          git push origin HEAD:main
