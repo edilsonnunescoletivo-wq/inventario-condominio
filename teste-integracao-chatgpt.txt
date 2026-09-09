@@ -1,0 +1,2 @@
+Integração ChatGPT ↔ GitHub configurada com sucesso em 09/09/2026.
+Este arquivo foi criado apenas para validar a permissão de escrita no repositório.
