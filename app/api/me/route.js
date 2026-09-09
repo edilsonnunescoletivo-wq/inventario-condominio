@@ -1,0 +1,5 @@
+import { query } from '@/lib/db';import { requireSession,apiError } from '@/lib/session';export const runtime='nodejs';
+export async function GET(request){try{const u=await requireSession(request);const [c,acs]=await Promise.all([
+ query(`SELECT c.id,c.nome,c.cnpj,c.razao_social,c.email,c.telefone,c.endereco,c.responsavel,c.plano,c.status,c.limite_usuarios,c.modulos,cs.nome_sistema,cs.logo_data_url,cs.cor_primaria,cs.rodape_relatorio,cs.mensagem_pedido FROM condominios c LEFT JOIN configuracoes_sistema cs ON cs.condominio_id=c.id WHERE c.id=$1`,[u.condominio_id]),
+ u.is_superadmin?query(`SELECT id condominio_id,nome,'admin'::text perfil,status FROM condominios ORDER BY nome`):query(`SELECT uc.condominio_id,c.nome,uc.perfil,c.status FROM usuario_condominios uc JOIN condominios c ON c.id=uc.condominio_id WHERE uc.usuario_id=$1 AND uc.ativo=true ORDER BY c.nome`,[u.id])]);
+ return Response.json({user:{id:u.id,nome:u.nome,email:u.email,perfil:u.perfil,is_superadmin:u.is_superadmin},condominio:c.rows[0],condominios:acs.rows});}catch(e){return apiError(e)}}
