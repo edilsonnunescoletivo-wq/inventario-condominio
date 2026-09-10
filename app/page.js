@@ -25,6 +25,11 @@ const benefits = [
   'Padronização das rotinas do condomínio',
 ];
 
+function planWhatsAppHref(plan){
+  const message = `Olá! Escolhi o plano ${plan} do Soluções Condo e gostaria de contratar.`;
+  return `https://wa.me/5571997045391?text=${encodeURIComponent(message)}`;
+}
+
 export default function CommercialPage(){
   const [menuOpen,setMenuOpen]=useState(false);
   const [logged,setLogged]=useState(false);
@@ -124,7 +129,7 @@ export default function CommercialPage(){
             <div className="plan-users">Até 3 usuários administrativos</div>
             <div className="plan-features">
               {['Dashboard','Inventário','Materiais e estoque','Fornecedores','Unidades e moradores','Documentos','Comunicados','Reservas','Segurança e isolamento dos dados'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href="mailto:contato@solucoescondo.com.br?subject=Plano%20B%C3%A1sico%20Solu%C3%A7%C3%B5es%20Condo" className="landing-btn light large plan-btn">Quero o Básico</a>
+            </div><a href={planWhatsAppHref('Básico')} target="_blank" rel="noopener noreferrer" className="landing-btn light large plan-btn">Quero o Básico</a>
           </article>
           <article className="pricing-card featured">
             <div className="popular-tag">MAIS COMPLETO PARA A OPERAÇÃO</div><div className="plan-name">Avançado</div><p className="plan-purpose">Gestão operacional completa para administrar equipes, serviços, manutenção e recursos.</p>
@@ -132,7 +137,7 @@ export default function CommercialPage(){
             <div className="plan-users">Até 10 usuários administrativos</div>
             <div className="plan-features">
               {['Tudo do Básico','Controle financeiro de reservas','WhatsApp nas reservas','Cotações','Ferramentas e empréstimos','Manutenções preventivas e O.S.','Ocorrências e checklists','Contratos e relatórios avançados','Gestão de colaboradores','Tratamento de relógio de ponto','Importação e tratamento de marcações','Banco de horas, atrasos e faltas','Escalas, jornadas e frequência','Perfis e permissões'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href="mailto:contato@solucoescondo.com.br?subject=Plano%20Avan%C3%A7ado%20Solu%C3%A7%C3%B5es%20Condo" className="landing-btn primary large plan-btn">Quero o Avançado</a>
+            </div><a href={planWhatsAppHref('Avançado')} target="_blank" rel="noopener noreferrer" className="landing-btn primary large plan-btn">Quero o Avançado</a>
           </article>
           <article className="pricing-card premium-card">
             <div className="plan-name">Premium</div><p className="plan-purpose">Controle, inteligência e automação para condomínios de maior porte e administradoras.</p>
@@ -140,7 +145,7 @@ export default function CommercialPage(){
             <div className="plan-users">Franquia ampliada de usuários</div>
             <div className="plan-features">
               {['Tudo do Avançado','Auditoria de atividades','Histórico detalhado de alterações','Múltiplos condomínios por usuário','Gestão centralizada','Automações avançadas','Integração automática com relógio de ponto','Comunicação com equipamentos compatíveis','Centralização de vários relógios/condomínios','Relatórios executivos','Suporte prioritário'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href="mailto:contato@solucoescondo.com.br?subject=Plano%20Premium%20Solu%C3%A7%C3%B5es%20Condo" className="landing-btn dark large plan-btn">Quero o Premium</a>
+            </div><a href={planWhatsAppHref('Premium')} target="_blank" rel="noopener noreferrer" className="landing-btn dark large plan-btn">Quero o Premium</a>
           </article>
         </div>
         <div className="point-highlight"><div className="point-highlight-icon"><Clock3/></div><div><strong>Gestão de Ponto integrada à operação</strong><p>No Avançado, trate marcações, jornadas, banco de horas, atrasos e faltas. No Premium, a proposta inclui integração automática com relógios de ponto compatíveis para centralizar equipamentos e condomínios.</p></div></div>
