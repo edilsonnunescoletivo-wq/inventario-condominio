@@ -6,23 +6,36 @@ import { ingestDeviceEvents } from '@/lib/ponto';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function POST(request, { params }) {
   try {
     const { deviceId } = await params;
 
-    if (!deviceId) {
+    if (
+      !deviceId ||
+      !UUID_REGEX.test(String(deviceId))
+    ) {
       return Response.json(
-        { error: 'Equipamento inválido.' },
+        {
+          error: 'Equipamento inválido.',
+        },
         { status: 400 }
       );
     }
 
     const token =
-      request.headers.get('x-ponto-device-token') || '';
+      request.headers.get(
+        'x-ponto-device-token'
+      ) || '';
 
     if (!token) {
       return Response.json(
-        { error: 'Credencial do agente ausente.' },
+        {
+          error:
+            'Credencial do agente ausente.',
+        },
         { status: 401 }
       );
     }
@@ -42,7 +55,8 @@ export async function POST(request, { params }) {
       [deviceId]
     );
 
-    const device = result.rows[0];
+    const device =
+      result.rows[0];
 
     if (
       !device ||
@@ -53,13 +67,18 @@ export async function POST(request, { params }) {
       )
     ) {
       return Response.json(
-        { error: 'Agente não autorizado.' },
+        {
+          error:
+            'Agente não autorizado.',
+        },
         { status: 401 }
       );
     }
 
     const body =
-      await request.json().catch(() => ({}));
+      await request
+        .json()
+        .catch(() => ({}));
 
     if (
       !Array.isArray(body.events) ||
@@ -79,10 +98,13 @@ export async function POST(request, { params }) {
       await ingestDeviceEvents({
         request,
         device,
-        events: body.events,
+        events:
+          body.events,
       });
 
-    return Response.json(response);
+    return Response.json(
+      response
+    );
   } catch (error) {
     return apiError(error);
   }
