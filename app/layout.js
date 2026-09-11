@@ -1,4 +1,5 @@
 import './globals.css';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata = {
   title: 'Soluções Condo | Gestão Operacional de Condomínios',
@@ -6,5 +7,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return <html lang="pt-BR"><body>{children}</body></html>;
+  return <html lang="pt-BR"><body>{children}<SiteFooter/></body></html>;
 }
