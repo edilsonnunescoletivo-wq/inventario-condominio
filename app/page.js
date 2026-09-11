@@ -67,7 +67,7 @@ export default function CommercialPage(){
           <p>Uma plataforma criada para centralizar a rotina operacional de condomínios, conectando reservas, manutenção, checklists, inventário, ocorrências, documentos e gestão em um único ambiente.</p>
           <div className="hero-actions">
             <Link href={accessHref} className="landing-btn primary large">{logged?'Abrir meu painel':'Acessar o sistema'} <ArrowRight size={19}/></Link>
-            <a href="#modulos" className="landing-btn light large">Ver funcionalidades</a>
+            <Link href="/demonstracao" className="landing-btn light large">Experimentar demonstração</Link>
           </div>
           <div className="hero-trust">
             <span><CheckCircle2/> Rotina centralizada</span><span><CheckCircle2/> Acesso web</span><span><CheckCircle2/> Informações em tempo real</span>
@@ -136,19 +136,19 @@ export default function CommercialPage(){
             <div className="plan-price"><strong>R$ 149,00</strong><span>/ mês</span></div>
             <div className="plan-users">Até 10 usuários administrativos</div>
             <div className="plan-features">
-              {['Tudo do Básico','Controle financeiro de reservas','WhatsApp nas reservas','Cotações','Ferramentas e empréstimos','Manutenções preventivas e O.S.','Ocorrências e checklists','Contratos e relatórios avançados','Gestão de colaboradores','Tratamento de relógio de ponto','Importação e tratamento de marcações','Banco de horas, atrasos e faltas','Escalas, jornadas e frequência','Perfis e permissões'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
+              {['Tudo do Básico','Controle financeiro de reservas','WhatsApp nas reservas','Cotações','Ferramentas e empréstimos','Manutenções preventivas e O.S.','Ocorrências e checklists','Contratos e relatórios avançados','Gestão de colaboradores — em desenvolvimento','Tratamento de relógio de ponto — em desenvolvimento','Importação e tratamento de marcações — em desenvolvimento','Banco de horas, atrasos e faltas — em desenvolvimento','Escalas, jornadas e frequência — em desenvolvimento','Perfis e permissões'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
             </div><a href={planWhatsAppHref('Avançado')} target="_blank" rel="noopener noreferrer" className="landing-btn primary large plan-btn">Quero o Avançado</a>
           </article>
           <article className="pricing-card premium-card">
             <div className="plan-name">Premium</div><p className="plan-purpose">Controle, inteligência e automação para condomínios de maior porte e administradoras.</p>
             <div className="plan-price"><strong>R$ 399,00</strong><span>/ mês</span></div>
-            <div className="plan-users">Franquia ampliada de usuários</div>
+            <div className="plan-users">Limite de usuários definido na proposta</div>
             <div className="plan-features">
-              {['Tudo do Avançado','Auditoria de atividades','Histórico detalhado de alterações','Múltiplos condomínios por usuário','Gestão centralizada','Automações avançadas','Integração automática com relógio de ponto','Comunicação com equipamentos compatíveis','Centralização de vários relógios/condomínios','Relatórios executivos','Suporte prioritário'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
+              {['Tudo do Avançado','Auditoria de atividades','Histórico detalhado de alterações','Múltiplos condomínios por usuário','Gestão centralizada','Automações avançadas','Integração automática com relógio de ponto — em desenvolvimento','Comunicação com equipamentos compatíveis — em desenvolvimento','Centralização de vários relógios/condomínios — em desenvolvimento','Relatórios executivos','Suporte prioritário'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
             </div><a href={planWhatsAppHref('Premium')} target="_blank" rel="noopener noreferrer" className="landing-btn dark large plan-btn">Quero o Premium</a>
           </article>
         </div>
-        <div className="point-highlight"><div className="point-highlight-icon"><Clock3/></div><div><strong>Gestão de Ponto integrada à operação</strong><p>No Avançado, trate marcações, jornadas, banco de horas, atrasos e faltas. No Premium, a proposta inclui integração automática com relógios de ponto compatíveis para centralizar equipamentos e condomínios.</p></div></div>
+        <div className="point-highlight"><div className="point-highlight-icon"><Clock3/></div><div><strong>Controle de Ponto — em desenvolvimento</strong><p>O módulo de ponto está em desenvolvimento e ainda não está disponível para uso. A contratação dos planos considera os recursos já liberados; a disponibilidade futura será comunicada pela Soluções Condo.</p></div></div>
         <p className="pricing-note"><ShieldCheck size={16}/> Segurança, autenticação, isolamento dos dados por condomínio e proteção da plataforma fazem parte de todos os planos.</p>
       </div>
     </section>
@@ -182,6 +182,7 @@ export default function CommercialPage(){
       </div>
     </section>
 
+    <section className="landing-section"><div className="landing-container"><div className="section-heading centered"><h2>Conheça o sistema antes de contratar</h2><p>Explore uma inspeção, acompanhe a ordem de serviço e veja como a gestão valida a conclusão.</p><Link href="/demonstracao" className="landing-btn primary">Abrir demonstração interativa</Link></div><div className="faq-grid"><details><summary>Como funciona a implantação?</summary><p>O administrador cadastra o condomínio, configura os espaços e importa unidades, moradores e patrimônio por CSV, com conferência antes de salvar. A extensão do apoio à implantação é combinada na proposta.</p></details><details><summary>Como os moradores acessam?</summary><p>A administração ativa os acessos. Os moradores usam uma área própria para reservas, comunicados e acompanhamento das suas solicitações.</p><Link href="/morador">Abrir área do morador</Link></details><details><summary>O que está incluído no suporte?</summary><p>Fale com a Soluções Condo pelo WhatsApp para definir canais, horários de atendimento e apoio à implantação na proposta do seu condomínio.</p></details><details><summary>O Controle de Ponto já está disponível?</summary><p>Ainda não. Os recursos de ponto e integração com relógios estão em desenvolvimento e são identificados dessa forma nos planos.</p></details></div></div></section>
     <footer className="landing-footer"><div className="landing-container footer-inner"><div className="landing-brand"><div className="landing-brandmark"><Building2 size={20}/></div><div><strong>Soluções Condo</strong><span>Gestão Operacional</span></div></div><p>Gestão operacional de condomínios com mais organização, controle e informação.</p><span>© 2026 Soluções Condo</span></div></footer>
   </main>
 }
