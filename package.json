@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
@@ -16,5 +17,9 @@
     "qrcode": "1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "esbuild": "^0.28.2"
   }
 }
