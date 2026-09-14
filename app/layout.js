@@ -1,4 +1,5 @@
 import './globals.css';
+import './condo-theme.css';
 import SiteFooter from '@/components/SiteFooter';
 
 export const metadata = {
