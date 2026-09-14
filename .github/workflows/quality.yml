@@ -1,0 +1,33 @@
+name: Qualidade Solucoes Condo
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, feature/etapa4-validacao-funcional]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: postgres://ci:ci@127.0.0.1:5432/ci
+      JWT_SECRET: ci-build-secret-only-not-used-in-production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run functional tests
+        run: npm test
+
+      - name: Build production bundle
+        run: npm run build
