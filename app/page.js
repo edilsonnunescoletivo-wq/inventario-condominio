@@ -1,188 +1,49 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import {
-  ArrowRight, Building2, CalendarDays, CheckCircle2, ClipboardCheck, FileText,
-  Gauge, HardHat, LayoutDashboard, MessageSquareText, PackageSearch, QrCode,
-  ShieldCheck, Smartphone, Sparkles, UsersRound, Wrench, Menu, X, BarChart3, Clock3
-} from 'lucide-react';
+import {useEffect,useState} from 'react';
+import {ArrowRight,Building2,CalendarDays,CheckCircle2,ClipboardCheck,FileText,Gauge,HardHat,LayoutDashboard,PackageSearch,ShieldCheck,Smartphone,Sparkles,UsersRound,Wrench,Menu,X,CreditCard,Boxes,Bell,ShoppingCart,KeyRound} from 'lucide-react';
 
-const modules = [
-  {icon: CalendarDays, title:'Reservas', text:'Controle espaços, eventos, valores, pagamentos e lembretes em um só lugar.'},
-  {icon: Wrench, title:'Manutenção e O.S.', text:'Acompanhe solicitações, prioridades, execução e histórico operacional.'},
-  {icon: ClipboardCheck, title:'Checklists', text:'Padronize rotinas e registre inspeções das áreas comuns.'},
-  {icon: PackageSearch, title:'Estoque e inventário', text:'Tenha visão dos materiais, ferramentas, bens e movimentações.'},
-  {icon: MessageSquareText, title:'Ocorrências e comunicação', text:'Centralize registros importantes e mantenha a gestão bem informada.'},
-  {icon: FileText, title:'Documentos e relatórios', text:'Organize documentos e gere relatórios para apoiar decisões e prestações de contas.'},
+const modules=[
+ {icon:LayoutDashboard,title:'Painel operacional',text:'Indicadores, prioridades e visão consolidada da rotina de cada condomínio.'},
+ {icon:Building2,title:'Gestão multi-condomínio',text:'Síndicos administram seus condomínios em um único acesso, mantendo os dados isolados.'},
+ {icon:CreditCard,title:'Autorização de pagamentos',text:'Solicitações por diretoria, parcelas, vencimentos e dupla validação entre Administração e Diretor.'},
+ {icon:Wrench,title:'Manutenção e O.S.',text:'Planos preventivos, ordens de serviço, responsáveis, prioridades e histórico.'},
+ {icon:ClipboardCheck,title:'Checklists e ocorrências',text:'Inspeções operacionais, evidências, pendências e acompanhamento da resolução.'},
+ {icon:CalendarDays,title:'Reservas e agenda',text:'Eventos, valores, pagamentos, vencimentos, agenda e comunicação com o solicitante.'},
+ {icon:Boxes,title:'Patrimônio e suprimentos',text:'Inventário, estoque, materiais, ferramentas e movimentações centralizados.'},
+ {icon:ShoppingCart,title:'Compras e fornecedores',text:'Fornecedores, orçamentos, cotações, contratos e documentos em um só fluxo.'},
+ {icon:UsersRound,title:'Equipe e acessos',text:'Perfis por função, equipe por condomínio, Diretorias e acesso conforme competência.'},
 ];
-
-const benefits = [
-  'Mais controle sobre a rotina operacional',
-  'Histórico centralizado de atividades',
-  'Redução de controles paralelos e planilhas soltas',
-  'Informações acessíveis pelo celular ou computador',
-  'Indicadores para acompanhamento da administração',
-  'Padronização das rotinas do condomínio',
-];
-
-function planWhatsAppHref(plan){
-  const message = `Olá! Escolhi o plano ${plan} do Soluções Condo e gostaria de contratar.`;
-  return `https://wa.me/5571997045391?text=${encodeURIComponent(message)}`;
-}
+const benefits=['Menos planilhas e informações espalhadas','Visão de vários condomínios no mesmo acesso','Responsabilidades e aprovações rastreáveis','Histórico operacional para prestação de contas','Acesso pelo celular, tablet ou computador','Dados separados e protegidos por condomínio'];
+const wa=(msg='Quero conhecer o Soluções Condo')=>`https://wa.me/5571997045391?text=${encodeURIComponent(msg)}`;
 
 export default function CommercialPage(){
-  const [menuOpen,setMenuOpen]=useState(false);
-  const [logged,setLogged]=useState(false);
-  useEffect(()=>{setLogged(Boolean(localStorage.getItem('token')))},[]);
-  const accessHref=logged?'/dashboard':'/login';
+ const [menuOpen,setMenuOpen]=useState(false),[logged,setLogged]=useState(false);
+ useEffect(()=>setLogged(Boolean(localStorage.getItem('token'))),[]);const accessHref=logged?'/dashboard':'/login';
+ return <main className="landing">
+  <header className="landing-nav"><div className="landing-container nav-inner">
+   <Link href="/" className="landing-brand"><div className="landing-brandmark"><Building2 size={22}/></div><div><strong>Soluções Condo</strong><span>Gestão Operacional</span></div></Link>
+   <nav className="desktop-nav"><a href="#solucao">A plataforma</a><a href="#modulos">Recursos</a><a href="#gestao">Para quem é</a><a href="#contato">Fale conosco</a></nav>
+   <div className="nav-cta"><Link href={accessHref} className="landing-btn ghost">{logged?'Ir para o painel':'Acessar sistema'}</Link><a href={wa()} target="_blank" rel="noreferrer" className="landing-btn primary">Solicitar apresentação <ArrowRight size={17}/></a></div>
+   <button className="mobile-menu-btn" onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?<X/>:<Menu/>}</button>
+  </div>{menuOpen&&<div className="mobile-menu"><a href="#modulos">Recursos</a><a href="#gestao">Para quem é</a><a href="#contato">Contato</a><Link href={accessHref} className="landing-btn primary">Acessar sistema</Link></div>}</header>
 
-  return <main className="landing">
-    <header className="landing-nav">
-      <div className="landing-container nav-inner">
-        <Link href="/" className="landing-brand" aria-label="Soluções Condo">
-          <div className="landing-brandmark"><Building2 size={22}/></div>
-          <div><strong>Soluções Condo</strong><span>Gestão Operacional</span></div>
-        </Link>
-        <nav className="desktop-nav">
-          <a href="#solucao">A solução</a><a href="#modulos">Módulos</a><a href="#planos">Planos</a><a href="#beneficios">Benefícios</a><a href="#gestao">Para sua gestão</a>
-        </nav>
-        <div className="nav-cta">
-          <Link href={accessHref} className="landing-btn ghost">{logged?'Ir para o painel':'Acessar sistema'}</Link>
-          <a href="#contato" className="landing-btn primary">Conhecer a solução <ArrowRight size={17}/></a>
-        </div>
-        <button className="mobile-menu-btn" onClick={()=>setMenuOpen(!menuOpen)} aria-label="Menu">{menuOpen?<X/>:<Menu/>}</button>
-      </div>
-      {menuOpen&&<div className="mobile-menu">
-        <a href="#solucao" onClick={()=>setMenuOpen(false)}>A solução</a><a href="#modulos" onClick={()=>setMenuOpen(false)}>Módulos</a><a href="#planos" onClick={()=>setMenuOpen(false)}>Planos</a><a href="#beneficios" onClick={()=>setMenuOpen(false)}>Benefícios</a><a href="#gestao" onClick={()=>setMenuOpen(false)}>Para sua gestão</a>
-        <Link href={accessHref} className="landing-btn primary" onClick={()=>setMenuOpen(false)}>{logged?'Ir para o painel':'Acessar sistema'}</Link>
-      </div>}
-    </header>
+  <section className="hero" id="solucao"><div className="hero-glow one"/><div className="hero-glow two"/><div className="landing-container hero-grid">
+   <div className="hero-copy"><div className="eyebrow"><Sparkles size={16}/> O condomínio inteiro em uma única operação</div><h1>Gestão condominial com controle, responsabilidade e visão em tempo real.</h1><p>O Soluções Condo conecta síndicos, administradores, diretores e equipes em uma plataforma criada para acompanhar o que realmente acontece na operação: pendências, manutenção, checklists, reservas, patrimônio, fornecedores, documentos e autorizações de pagamento.</p><div className="hero-actions"><a href={wa('Olá! Gostaria de agendar uma apresentação do Soluções Condo.')} target="_blank" rel="noreferrer" className="landing-btn primary large">Quero conhecer o sistema <ArrowRight size={19}/></a><Link href={accessHref} className="landing-btn light large">{logged?'Abrir meu painel':'Já sou cliente'}</Link></div><div className="hero-trust"><span><CheckCircle2/> Multi-condomínio</span><span><CheckCircle2/> Perfis e permissões</span><span><CheckCircle2/> 100% web</span></div></div>
+   <div className="hero-product"><div className="product-window"><div className="window-bar"><span/><span/><span/><div>Soluções Condo • Visão geral</div></div><div className="product-layout">
+    <aside className="mock-sidebar"><div className="mock-logo"><Building2 size={18}/></div>{[[LayoutDashboard,'Visão geral'],[Building2,'Meus condomínios'],[CreditCard,'Autoriz. pagamentos'],[Bell,'Notificações'],[CalendarDays,'Agenda'],[Wrench,'Manutenção'],[ClipboardCheck,'Checklists'],[UsersRound,'Equipe e acessos']].map(([Icon,t],i)=><div key={t} className={`mock-nav ${i===0?'active':''}`}><Icon size={15}/><span>{t}</span></div>)}</aside>
+    <div className="mock-main"><div className="mock-top"><div><small>RESUMO OPERACIONAL</small><strong>Visão geral do condomínio</strong></div><div className="mock-avatar">EN</div></div><div className="mock-metrics"><div><Gauge/><span>Pendências abertas</span><strong>12</strong></div><div><Wrench/><span>Manutenções</span><strong>03</strong></div><div><ClipboardCheck/><span>Checklists</span><strong>08</strong></div></div><div className="mock-panels"><div className="mock-card large-card"><div className="mock-card-title"><strong>Prioridades da operação</strong><span>Hoje</span></div>{[['Pagamento','NF 1842 • Diretoria Financeira','Aguardando diretor'],['Manutenção','Bomba da piscina','Em andamento'],['Checklist','Área comum','Pendente']].map((r,i)=><div className="mock-row" key={i}><div className={`mock-dot d${i}`}/><div><strong>{r[0]}</strong><span>{r[1]}</span></div><em>{r[2]}</em></div>)}</div><div className="mock-card"><div className="mock-card-title"><strong>Governança</strong></div><div className="progress-ring">92<small>%</small></div><p>Rotinas acompanhadas</p></div></div></div>
+   </div></div><div className="floating-card fc-one"><ShieldCheck/><div><strong>Acesso por competência</strong><span>Cada perfil vê o que precisa</span></div></div><div className="floating-card fc-two"><Smartphone/><div><strong>Operação na mão</strong><span>Celular e computador</span></div></div></div>
+  </div></section>
 
-    <section className="hero" id="solucao">
-      <div className="hero-glow one"/><div className="hero-glow two"/>
-      <div className="landing-container hero-grid">
-        <div className="hero-copy">
-          <div className="eyebrow"><Sparkles size={16}/> Gestão operacional mais simples, organizada e inteligente</div>
-          <h1>Mais controle para cuidar de tudo o que faz o condomínio funcionar.</h1>
-          <p>Uma plataforma criada para centralizar a rotina operacional de condomínios, conectando reservas, manutenção, checklists, inventário, ocorrências, documentos e gestão em um único ambiente.</p>
-          <div className="hero-actions">
-            <Link href={accessHref} className="landing-btn primary large">{logged?'Abrir meu painel':'Acessar o sistema'} <ArrowRight size={19}/></Link>
-            <Link href="/demonstracao" className="landing-btn light large">Experimentar demonstração</Link>
-          </div>
-          <div className="hero-trust">
-            <span><CheckCircle2/> Rotina centralizada</span><span><CheckCircle2/> Acesso web</span><span><CheckCircle2/> Informações em tempo real</span>
-          </div>
-        </div>
-        <div className="hero-product" aria-label="Prévia do painel do sistema">
-          <div className="product-window">
-            <div className="window-bar"><span/><span/><span/><div>Soluções Condo • Painel Operacional</div></div>
-            <div className="product-layout">
-              <aside className="mock-sidebar">
-                <div className="mock-logo"><Building2 size={18}/></div>
-                {[LayoutDashboard,CalendarDays,Wrench,ClipboardCheck,PackageSearch,FileText].map((Icon,i)=><div key={i} className={`mock-nav ${i===0?'active':''}`}><Icon size={16}/><span>{['Visão geral','Reservas','Manutenção','Checklists','Inventário','Documentos'][i]}</span></div>)}
-              </aside>
-              <div className="mock-main">
-                <div className="mock-top"><div><small>VISÃO GERAL</small><strong>Bom dia, Administração</strong></div><div className="mock-avatar">AD</div></div>
-                <div className="mock-metrics">
-                  <div><Gauge/><span>Chamados abertos</span><strong>12</strong></div>
-                  <div><CalendarDays/><span>Próximas reservas</span><strong>08</strong></div>
-                  <div><ClipboardCheck/><span>Checklists hoje</span><strong>05</strong></div>
-                </div>
-                <div className="mock-panels">
-                  <div className="mock-card large-card"><div className="mock-card-title"><strong>Atividades recentes</strong><span>Hoje</span></div>
-                    {[['Manutenção','Portão social','Em andamento'],['Reserva','Salão de festas','Confirmada'],['Checklist','Área da piscina','Concluído']].map((r,i)=><div className="mock-row" key={i}><div className={`mock-dot d${i}`}/><div><strong>{r[0]}</strong><span>{r[1]}</span></div><em>{r[2]}</em></div>)}
-                  </div>
-                  <div className="mock-card"><div className="mock-card-title"><strong>Operação</strong></div><div className="progress-ring">87<small>%</small></div><p>Rotinas concluídas no período</p></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="floating-card fc-one"><ShieldCheck/><div><strong>Gestão organizada</strong><span>Dados centralizados</span></div></div>
-          <div className="floating-card fc-two"><Smartphone/><div><strong>Acesse de onde estiver</strong><span>Celular, tablet ou computador</span></div></div>
-        </div>
-      </div>
-    </section>
+  <section className="proof-strip"><div className="landing-container proof-grid"><div><strong>Multi-condomínio</strong><span>gestão centralizada para o síndico</span></div><div><strong>Dupla validação</strong><span>Administração + Diretoria</span></div><div><strong>Operação rastreável</strong><span>histórico e responsabilidades</span></div><div><strong>Dados isolados</strong><span>segurança por condomínio</span></div></div></section>
 
-    <section className="proof-strip">
-      <div className="landing-container proof-grid">
-        <div><strong>1 plataforma</strong><span>para centralizar a operação</span></div>
-        <div><strong>Rotina integrada</strong><span>do registro ao acompanhamento</span></div>
-        <div><strong>Visão gerencial</strong><span>para decisões mais rápidas</span></div>
-        <div><strong>100% web</strong><span>acesso simples e responsivo</span></div>
-      </div>
-    </section>
+  <section className="landing-section modules-section" id="modulos"><div className="landing-container"><div className="section-heading centered"><span className="section-kicker">O SISTEMA ATUAL</span><h2>Da rotina operacional à decisão da gestão</h2><p>Uma plataforma ampla, construída para substituir controles dispersos por processos claros, responsáveis definidos e informação centralizada.</p></div><div className="modules-grid">{modules.map(({icon:Icon,title,text})=><article className="module-card" key={title}><div className="module-icon"><Icon/></div><h3>{title}</h3><p>{text}</p><span>Integrado à plataforma <ArrowRight size={15}/></span></article>)}</div></div></section>
 
-    <section className="landing-section modules-section" id="modulos">
-      <div className="landing-container">
-        <div className="section-heading centered"><span className="section-kicker">FUNCIONALIDADES</span><h2>Uma visão completa da operação do condomínio</h2><p>Menos informações espalhadas e mais controle para quem administra, supervisiona e executa.</p></div>
-        <div className="modules-grid">{modules.map(({icon:Icon,title,text})=><article className="module-card" key={title}><div className="module-icon"><Icon/></div><h3>{title}</h3><p>{text}</p><span>Gestão integrada <ArrowRight size={15}/></span></article>)}</div>
-      </div>
-    </section>
+  <section className="landing-section alt" id="gestao"><div className="landing-container split-section"><div className="visual-stack"><div className="visual-card main-visual"><div className="mini-head"><span>Fluxo de autorização</span><CreditCard/></div><div style={{padding:'28px 10px',display:'grid',gap:14}}>{['Solicitação cadastrada','Administração valida','Diretor da competência valida','Liberado para pagamento'].map((x,i)=><div key={x} style={{display:'flex',alignItems:'center',gap:12,fontWeight:700}}><span style={{width:30,height:30,borderRadius:30,display:'grid',placeItems:'center',background:'#edf5ff',color:'#0b5cff'}}>{i+1}</span>{x}</div>)}</div></div><div className="visual-card mini-visual"><KeyRound/><div><strong>Perfis e permissões</strong><span>Síndico, administração, diretor e equipe</span></div></div></div><div className="section-heading"><span className="section-kicker">GESTÃO COM GOVERNANÇA</span><h2>Quem precisa decidir enxerga. Quem precisa executar sabe o que fazer.</h2><p>O sistema organiza o acesso e as responsabilidades de cada pessoa. Diretores acompanham sua competência, equipes trabalham no condomínio autorizado e o síndico mantém a visão dos condomínios sob sua gestão.</p><div className="benefit-list">{benefits.map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}</div></div></div></section>
 
-    <section className="landing-section pricing-section" id="planos">
-      <div className="landing-container">
-        <div className="section-heading centered"><span className="section-kicker">PLANOS</span><h2>Escolha o nível de gestão ideal para o seu condomínio</h2><p>Comece com o essencial e evolua para uma operação completa, com controle de equipes, ponto, auditoria e automações.</p></div>
-        <div className="pricing-grid">
-          <article className="pricing-card">
-            <div className="plan-name">Básico</div><p className="plan-purpose">Organização essencial para condomínios que querem deixar planilhas e controles dispersos.</p>
-            <div className="plan-price"><strong>R$ 99,00</strong><span>/ mês</span></div>
-            <div className="plan-users">Até 3 usuários administrativos</div>
-            <div className="plan-features">
-              {['Dashboard','Inventário','Materiais e estoque','Fornecedores','Unidades e moradores','Documentos','Comunicados','Reservas','Segurança e isolamento dos dados'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href={planWhatsAppHref('Básico')} target="_blank" rel="noopener noreferrer" className="landing-btn light large plan-btn">Quero o Básico</a>
-          </article>
-          <article className="pricing-card featured">
-            <div className="popular-tag">MAIS COMPLETO PARA A OPERAÇÃO</div><div className="plan-name">Avançado</div><p className="plan-purpose">Gestão operacional completa para administrar equipes, serviços, manutenção e recursos.</p>
-            <div className="plan-price"><strong>R$ 149,00</strong><span>/ mês</span></div>
-            <div className="plan-users">Até 10 usuários administrativos</div>
-            <div className="plan-features">
-              {['Tudo do Básico','Controle financeiro de reservas','WhatsApp nas reservas','Cotações','Ferramentas e empréstimos','Manutenções preventivas e O.S.','Ocorrências e checklists','Contratos e relatórios avançados','Gestão de colaboradores — em desenvolvimento','Tratamento de relógio de ponto — em desenvolvimento','Importação e tratamento de marcações — em desenvolvimento','Banco de horas, atrasos e faltas — em desenvolvimento','Escalas, jornadas e frequência — em desenvolvimento','Perfis e permissões'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href={planWhatsAppHref('Avançado')} target="_blank" rel="noopener noreferrer" className="landing-btn primary large plan-btn">Quero o Avançado</a>
-          </article>
-          <article className="pricing-card premium-card">
-            <div className="plan-name">Premium</div><p className="plan-purpose">Controle, inteligência e automação para condomínios de maior porte e administradoras.</p>
-            <div className="plan-price"><strong>R$ 399,00</strong><span>/ mês</span></div>
-            <div className="plan-users">Limite de usuários definido na proposta</div>
-            <div className="plan-features">
-              {['Tudo do Avançado','Auditoria de atividades','Histórico detalhado de alterações','Múltiplos condomínios por usuário','Gestão centralizada','Automações avançadas','Integração automática com relógio de ponto — em desenvolvimento','Comunicação com equipamentos compatíveis — em desenvolvimento','Centralização de vários relógios/condomínios — em desenvolvimento','Relatórios executivos','Suporte prioritário'].map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}
-            </div><a href={planWhatsAppHref('Premium')} target="_blank" rel="noopener noreferrer" className="landing-btn dark large plan-btn">Quero o Premium</a>
-          </article>
-        </div>
-        <div className="point-highlight"><div className="point-highlight-icon"><Clock3/></div><div><strong>Controle de Ponto — em desenvolvimento</strong><p>O módulo de ponto está em desenvolvimento e ainda não está disponível para uso. A contratação dos planos considera os recursos já liberados; a disponibilidade futura será comunicada pela Soluções Condo.</p></div></div>
-        <p className="pricing-note"><ShieldCheck size={16}/> Segurança, autenticação, isolamento dos dados por condomínio e proteção da plataforma fazem parte de todos os planos.</p>
-      </div>
-    </section>
+  <section className="landing-section"><div className="landing-container"><div className="section-heading centered"><span className="section-kicker">FEITO PARA A OPERAÇÃO REAL</span><h2>Uma plataforma para quem administra e para quem executa</h2><p>O Soluções Condo aproxima gestão e operação sem transformar a rotina em burocracia.</p></div><div className="audience-grid"><article><div><Building2/></div><h3>Síndicos e administradoras</h3><p>Gerencie múltiplos condomínios, indicadores, licenças, equipes e prioridades em uma visão organizada.</p></article><article><div><HardHat/></div><h3>Administradores e equipes</h3><p>Registre demandas, acompanhe manutenção, checklists, reservas, materiais, fornecedores e documentos.</p></article><article><div><CreditCard/></div><h3>Diretores</h3><p>Acesse somente as pendências da sua competência e participe das autorizações com rastreabilidade.</p></article></div></div></section>
 
-    <section className="landing-section alt" id="beneficios">
-      <div className="landing-container split-section">
-        <div className="visual-stack">
-          <div className="visual-card main-visual"><div className="mini-head"><span>Indicadores operacionais</span><BarChart3/></div><div className="bar-chart">{[58,76,48,86,68,94,82].map((h,i)=><div key={i}><span style={{height:`${h}%`}}/><small>{['S','T','Q','Q','S','S','D'][i]}</small></div>)}</div></div>
-          <div className="visual-card mini-visual"><QrCode/><div><strong>Registros rastreáveis</strong><span>Organização e histórico</span></div></div>
-          <div className="visual-card mini-visual second"><UsersRound/><div><strong>Equipe alinhada</strong><span>Informação no mesmo lugar</span></div></div>
-        </div>
-        <div className="section-heading"><span className="section-kicker">MAIS EFICIÊNCIA</span><h2>Transforme a rotina operacional em informação para gestão.</h2><p>O sistema ajuda a tirar a operação do improviso, criando processos mais claros, rastreáveis e fáceis de acompanhar.</p><div className="benefit-list">{benefits.map(x=><div key={x}><CheckCircle2/><span>{x}</span></div>)}</div></div>
-      </div>
-    </section>
-
-    <section className="landing-section" id="gestao">
-      <div className="landing-container">
-        <div className="section-heading centered"><span className="section-kicker">FEITO PARA CONDOMÍNIOS</span><h2>Da administração à equipe operacional</h2><p>Uma ferramenta pensada para quem precisa acompanhar o dia a dia sem perder a visão do todo.</p></div>
-        <div className="audience-grid">
-          <article><div><Building2/></div><h3>Administradoras e síndicos</h3><p>Acompanhe indicadores, reservas, ocorrências, documentos e demandas importantes para a gestão.</p></article>
-          <article><div><HardHat/></div><h3>Gerentes e supervisores</h3><p>Organize prioridades, acompanhe execução e tenha histórico das rotinas e serviços.</p></article>
-          <article><div><UsersRound/></div><h3>Equipes operacionais</h3><p>Rotinas mais claras, checklists padronizados e registros acessíveis de forma simples.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section className="cta-section" id="contato">
-      <div className="landing-container cta-box">
-        <div><span className="section-kicker light-kicker">SOLUÇÕES CONDO</span><h2>Sua operação mais organizada começa com uma visão melhor.</h2><p>Centralize a rotina operacional do condomínio e transforme registros do dia a dia em gestão.</p></div>
-        <div className="cta-actions"><Link href={accessHref} className="landing-btn white large">{logged?'Ir para o painel':'Acessar o sistema'} <ArrowRight size={19}/></Link><a href="mailto:solucoes.condo.app@gmail.com" className="landing-btn outline-white large">solucoes.condo.app@gmail.com</a><a href="https://wa.me/5571997045391" target="_blank" rel="noopener noreferrer" className="landing-btn outline-white large">WhatsApp: (71) 99704-5391</a></div>
-      </div>
-    </section>
-
-    <section className="landing-section"><div className="landing-container"><div className="section-heading centered"><h2>Conheça o sistema antes de contratar</h2><p>Explore uma inspeção, acompanhe a ordem de serviço e veja como a gestão valida a conclusão.</p><Link href="/demonstracao" className="landing-btn primary">Abrir demonstração interativa</Link></div><div className="faq-grid"><details><summary>Como funciona a implantação?</summary><p>O administrador cadastra o condomínio, configura os espaços e importa unidades, moradores e patrimônio por CSV, com conferência antes de salvar. A extensão do apoio à implantação é combinada na proposta.</p></details><details><summary>Como os moradores acessam?</summary><p>A administração ativa os acessos. Os moradores usam uma área própria para reservas, comunicados e acompanhamento das suas solicitações.</p><Link href="/morador">Abrir área do morador</Link></details><details><summary>O que está incluído no suporte?</summary><p>Fale com a Soluções Condo pelo WhatsApp para definir canais, horários de atendimento e apoio à implantação na proposta do seu condomínio.</p></details><details><summary>O Controle de Ponto já está disponível?</summary><p>Ainda não. Os recursos de ponto e integração com relógios estão em desenvolvimento e são identificados dessa forma nos planos.</p></details></div></div></section>
-
-  </main>
+  <section className="landing-section cta-section" id="contato"><div className="landing-container"><div className="cta-box"><div><span className="section-kicker">SOLUÇÕES CONDO</span><h2>Veja como a plataforma pode organizar a operação dos seus condomínios.</h2><p>Solicite uma apresentação e conheça o sistema aplicado ao dia a dia da sua gestão.</p></div><div className="cta-actions"><a href={wa('Olá! Gostaria de conhecer o Soluções Condo e agendar uma apresentação.')} target="_blank" rel="noreferrer" className="landing-btn primary large">Falar pelo WhatsApp <ArrowRight size={18}/></a><Link href="/demonstracao" className="landing-btn light large">Ver demonstração</Link></div></div></div></section>
+ </main>
 }
