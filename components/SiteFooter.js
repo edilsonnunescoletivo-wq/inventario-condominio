@@ -1,4 +1,33 @@
+'use client';
+import {useEffect} from 'react';
+
 export default function SiteFooter() {
+  useEffect(()=>{
+    const routes=['Ordens de serviço','Manutenção','Reservas','Equipe e acessos'];
+    const handler=e=>{
+      const metric=e.target.closest('.condo-kpis > span,.condo-kpis > button');
+      if(!metric)return;
+      const box=metric.parentElement,index=[...box.children].indexOf(metric),target=routes[index];
+      if(!target)return;
+      e.preventDefault();
+      const card=metric.closest('.condo-card-rich');
+      const access=card?.querySelector('.condo-select');
+      if(access)access.click();
+      let attempts=0;
+      const timer=setInterval(()=>{
+        attempts++;
+        const nav=[...document.querySelectorAll('.navitem')].find(x=>x.textContent.trim().includes(target));
+        if(nav){clearInterval(timer);nav.click()}
+        else if(attempts>30)clearInterval(timer);
+      },150);
+    };
+    const key=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('.condo-kpis > span')){e.preventDefault();e.target.closest('.condo-kpis > span').click()}};
+    document.addEventListener('click',handler);
+    document.addEventListener('keydown',key);
+    const decorate=()=>document.querySelectorAll('.condo-kpis > span').forEach((el,i)=>{el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-label',`Abrir ${routes[i%4]}`)});
+    decorate();const observer=new MutationObserver(decorate);observer.observe(document.body,{childList:true,subtree:true});
+    return()=>{document.removeEventListener('click',handler);document.removeEventListener('keydown',key);observer.disconnect()};
+  },[]);
   return <footer className="site-footer">
     <div className="site-footer-inner">
       <div><strong>Soluções Condo</strong><p>© {new Date().getFullYear()} Edilson Nunes — Soluções Condo. Todos os direitos reservados.</p></div>
