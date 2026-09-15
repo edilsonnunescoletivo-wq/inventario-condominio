@@ -1,0 +1,1 @@
+import PaymentAuthorizationPanel from '@/components/PaymentAuthorizationPanel';export const metadata={title:'Autorização de Pagamentos | Soluções Condo'};export default function Page(){return <PaymentAuthorizationPanel/>}
