@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main, feature/etapa4-validacao-funcional]
+    branches: [main, feature/etapa5-acabamento-operacional]
 
 jobs:
   validate:
