@@ -33,7 +33,9 @@ export async function GET(request,{params}){
       case 'unidades': r=await query(`SELECT u.*,count(m.id)::int moradores FROM unidades u LEFT JOIN moradores m ON m.unidade_id=u.id AND m.ativo=true WHERE u.condominio_id=$1 AND u.ativo=true GROUP BY u.id ORDER BY u.bloco NULLS FIRST,u.unidade`,[id]);break;
       case 'moradores': r=await query(`SELECT m.*,u.bloco,u.unidade FROM moradores m JOIN unidades u ON u.id=m.unidade_id WHERE m.condominio_id=$1 AND m.ativo=true ORDER BY u.bloco NULLS FIRST,u.unidade,m.nome`,[id]);break;
       case 'areas': r=await query(`SELECT * FROM areas_reservaveis WHERE condominio_id=$1 AND ativo=true ORDER BY nome`,[id]);break;
-      case 'reservas': r=await query(`SELECT r.id,r.area_id,r.unidade_id,r.responsavel,r.tipo_evento,r.email_solicitante,r.whatsapp_solicitante,r.status,r.observacoes,r.valor_total,r.valor_pago,r.valor_restante,r.lembrete_enviado_em,r.criado_em,r.atualizado_em,a.nome area,u.bloco,u.unidade,
+      case 'reservas':
+        await query(`UPDATE reservas SET status='realizada',atualizado_em=now() WHERE condominio_id=$1 AND status='confirmada' AND fim<now()`,[id]);
+        r=await query(`SELECT r.id,r.area_id,r.unidade_id,r.responsavel,r.tipo_evento,r.email_solicitante,r.whatsapp_solicitante,r.status,r.observacoes,r.valor_total,r.valor_pago,r.valor_restante,r.lembrete_enviado_em,r.criado_em,r.atualizado_em,a.nome area,u.bloco,u.unidade,
         to_char(r.inicio AT TIME ZONE 'America/Bahia','YYYY-MM-DD"T"HH24:MI') inicio_local,
         to_char(r.fim AT TIME ZONE 'America/Bahia','YYYY-MM-DD"T"HH24:MI') fim_local,
         to_char(r.inicio AT TIME ZONE 'America/Bahia','DD/MM/YYYY HH24:MI') inicio_formatado,
