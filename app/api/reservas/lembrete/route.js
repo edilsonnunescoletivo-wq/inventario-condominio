@@ -41,11 +41,11 @@ export async function POST(request){
     const from=process.env.RESERVAS_EMAIL_FROM;
     if(!apiKey||!from) throw Object.assign(new Error('O envio de e-mail ainda não está configurado no servidor.'),{status:503});
 
-    const subject=`Lembrete de reserva - ${reserva.area} - ${reserva.data_evento}`;
+    const subject=`Lembrete de evento agendado - ${reserva.area} - ${reserva.data_evento}`;
     const lines=[
       `Olá, ${reserva.responsavel}!`,
       '',
-      `Este é um lembrete da sua reserva no ${reserva.condominio}.`,
+      `Este é um lembrete de evento agendado no ${reserva.condominio}.`,
       '',
       `Área: ${reserva.area}`,
       `Evento: ${reserva.tipo_evento||'Não informado'}`,
@@ -59,9 +59,9 @@ export async function POST(request){
       'Soluções Condo'
     ];
     const html=`<div style="font-family:Arial,sans-serif;line-height:1.55;color:#172033;max-width:640px">
-      <h2 style="margin-bottom:4px">Lembrete de reserva</h2>
+      <h2 style="margin-bottom:4px">Lembrete de evento agendado</h2>
       <p>Olá, <strong>${esc(reserva.responsavel)}</strong>!</p>
-      <p>Este é um lembrete da sua reserva no <strong>${esc(reserva.condominio)}</strong>.</p>
+      <p>Este é um lembrete de evento agendado no <strong>${esc(reserva.condominio)}</strong>.</p>
       <table style="border-collapse:collapse;width:100%;margin:18px 0">
         <tr><td style="padding:7px 0"><strong>Área</strong></td><td>${esc(reserva.area)}</td></tr>
         <tr><td style="padding:7px 0"><strong>Evento</strong></td><td>${esc(reserva.tipo_evento||'Não informado')}</td></tr>
